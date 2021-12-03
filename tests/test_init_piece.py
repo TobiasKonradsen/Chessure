@@ -44,8 +44,14 @@ class TestInitPieces(unittest.TestCase):
     
     def test_move_piece(self):
         """ Test for the movement of the piece"""
+        self.piece.possible_moves = lambda: []
         with self.assertRaises(IllegalMoveError):
             self.piece.move(Position())
+            
+        new_position = Position()
+        self.piece.possible_moves = lambda: [new_position]
+        self.piece.move(new_position)
+        self.assertEqual(new_position, self.piece._pos)
 
 
 if __name__ == "__main__":
