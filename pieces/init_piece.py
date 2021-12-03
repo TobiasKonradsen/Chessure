@@ -4,14 +4,14 @@ from game_logic.exceptions import IllegalMoveError
 
 
 class InitPiece(ABC):
-    def __init__(self, init_pos, team):
+    def __init__(self, init_pos, team, boardsize):
         self._pos = init_pos
-        self._team = team
+        self.team = team
+        self.boardsize  = boardsize
     
     @abstractmethod
     def possible_moves(self):
         raise NotImplementedError('This piece should not be able to move')
-    
     
     def move(self, pos):
         if pos in self.possible_moves():

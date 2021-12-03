@@ -2,3 +2,4 @@
 
 class IllegalMoveError(Exception):
     pass
+
