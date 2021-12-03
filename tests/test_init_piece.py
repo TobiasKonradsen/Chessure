@@ -3,6 +3,8 @@ import unittest
 from pieces.init_piece import InitPiece
 from game_logic.position import Position
 from game_logic.team import Team
+from game_logic.exceptions import IllegalMoveError
+
 
 class FakeInitPiece(InitPiece):
     def __init__(self, init_pos, team):
@@ -27,7 +29,8 @@ class TestInitPieces(unittest.TestCase):
 
     def test_get_possible_moves(self):
         """Test the possible moves."""
-        self.piece.possible_moves()
+        with self.assertRaises(NotImplementedError):
+            self.piece.possible_moves()
     
     def test_get_position(self):
         """ Test for the getting the position of the piece"""
@@ -41,14 +44,8 @@ class TestInitPieces(unittest.TestCase):
     
     def test_move_piece(self):
         """ Test for the movement of the piece"""
-        new_position = Position()
-        self.piece.move(new_position)
-        self.assertEqual(new_position, self.piece._pos)
-    
-
-    
-
-
+        with self.assertRaises(IllegalMoveError):
+            self.piece.move(Position())
 
 
 if __name__ == "__main__":

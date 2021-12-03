@@ -1,0 +1,4 @@
+
+
+class IllegalMoveError(Exception):
+    pass

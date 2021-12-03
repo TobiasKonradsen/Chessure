@@ -1,5 +1,7 @@
 
 from abc import ABC, abstractmethod
+from game_logic.exceptions import IllegalMoveError
+
 
 class InitPiece(ABC):
     def __init__(self, init_pos, team):
@@ -12,8 +14,11 @@ class InitPiece(ABC):
     
     
     def move(self, pos):
-         if pos in self.possible_moves():
+        if pos in self.possible_moves():
              self.set_position(pos)
+        else:
+            raise IllegalMoveError()
+            
  
     def get_position(self):
          return self._pos
