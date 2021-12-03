@@ -7,8 +7,8 @@ from game_logic.exceptions import IllegalMoveError
 
 
 class FakeInitPiece(InitPiece):
-    def __init__(self, init_pos, team):
-        super().__init__(init_pos, team)
+    def __init__(self, init_pos, team, boardsize):
+        super().__init__(init_pos, team, boardsize)
     
     def possible_moves(self):
         raise NotImplementedError('This piece should not be able to move')
