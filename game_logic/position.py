@@ -1,20 +1,18 @@
 
 
 class Position:
-    def __init__(self, row = 0, col = 0, boardsize = [8,8]):
+    def __init__(self, row=0, col=0, boardsize=[8, 8]):
         self.row = row
         self.col = col
         self.boardsize = boardsize
-        
+
     def __add__(self, pos):
-        self.row = self.row + pos.row
-        self.col = self.col + pos.col
-        
+        return Position(self.row + pos.row, self.col + pos.col, self.boardsize)
+
+    def __repr__(self):
+        return f"Position(row={self.row}, col={self.col}, boardsize={self.boardsize})"
+
     def isLegal(self):
-        row_bol = self.row <= self.boardsize[0] or self.row >= 0
-        col_bol = self.col <= self.boardsize[1] or self.col >= 0
-        if row_bol and col_bol:
-            return True
-        else:
-            return False
-        
+        row_bol = 0 <= self.row <= self.boardsize.rows
+        col_bol = 0 <= self.col <= self.boardsize.cols
+        return row_bol and col_bol

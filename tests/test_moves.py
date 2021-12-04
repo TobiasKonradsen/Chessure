@@ -7,22 +7,28 @@ from game_logic.position import Position
 class TestMoves(unittest.TestCase):
     """Test the functionality of the moves collection."""
 
-    def setUp(self):
-        self.moves = Moves()
-
     def test_constructor(self):
         """Test the constructor."""
-        self.assertIsInstance(self.moves, Moves)
-        self.assertEqual(len(self.moves), 0)
+        moves = Moves()
+        self.assertIsInstance(moves, Moves)
+        self.assertEqual(len(moves), 0)
+
+    def test_multiple_args_constructor(self):
+        """Test the constructor."""
+        n = 10
+        moves = Moves([None]*n)
+        self.assertIsInstance(moves, Moves)
+        self.assertEqual(len(moves), n)
 
     def test_append(self):
         """Test whether we can append to the moves."""
+        moves = Moves()
         with self.assertRaises(TypeError):
-            self.moves.append(0)
+            moves.append(0)
 
         position = Position()
-        self.moves.append(position)
-        self.assertEqual(self.moves[0], position)
+        moves.append(position)
+        self.assertEqual(moves[0], position)
 
 
 if __name__ == "__main__":
