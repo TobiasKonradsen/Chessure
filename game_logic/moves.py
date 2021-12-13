@@ -1,7 +1,7 @@
 from game_logic.position import Position
 
 
-class Moves(list):
+class SlowMoves(list):
     """A collection of positions."""
     content_type = Position
 
@@ -27,18 +27,23 @@ class Moves(list):
         super(Moves, self).append(item)
 
 
-class SlowMoves:
+class Moves:
     """A collection of positions."""
     content_type = Position
     l = []
 
-    def __init__(self, args):
+    def __init__(self, *args):
         """Call list __init__."""
-        self.l = args
+        temp = [*args]
+        self.l = temp[0]
 
     def __getitem__(self, index):
         return self.l[index]
-
+    
+    def __len__(self, *args):
+        """Use builtin-methods."""
+        return len(self.l)
+    
     def append(self, item):
         """Use builtin-methods."""
         if not isinstance(item, self.content_type):

@@ -1,6 +1,5 @@
 class Team(int):
     def __new__(cls, value):
-        print('new', value)
         return int.__new__(cls, value)
 
 

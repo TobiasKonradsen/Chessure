@@ -9,7 +9,7 @@ class TestMoves(unittest.TestCase):
 
     def test_constructor(self):
         """Test the constructor."""
-        moves = Moves()
+        moves = Moves([])
         self.assertIsInstance(moves, Moves)
         self.assertEqual(len(moves), 0)
 
@@ -22,11 +22,12 @@ class TestMoves(unittest.TestCase):
 
     def test_append(self):
         """Test whether we can append to the moves."""
-        moves = Moves()
+        moves = Moves([])
         with self.assertRaises(TypeError):
             moves.append(0)
-
+        moves = Moves([])
         position = Position()
+        print(moves)
         moves.append(position)
         self.assertEqual(moves[0], position)
 

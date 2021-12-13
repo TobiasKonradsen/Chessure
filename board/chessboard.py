@@ -27,6 +27,7 @@ class ChessBoard(list):
         """Use builtin-methods."""
         return self.size
 
-    def __getitem__(self, row, col):
+    def __getitem__(self, t_pos):
         """Get the value in the list that corresponds to this row, col indexing."""
+        row, col = t_pos
         return super().__getitem__(row*self.size.cols + col)

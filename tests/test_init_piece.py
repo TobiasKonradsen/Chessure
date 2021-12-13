@@ -4,7 +4,7 @@ from pieces.init_piece import InitPiece
 from game_logic.position import Position
 from game_logic.team import Team
 from game_logic.exceptions import IllegalMoveError
-
+from board.chessboard import BoardSize
 
 class FakeInitPiece(InitPiece):
     def __init__(self, init_pos, team, boardsize):
@@ -19,13 +19,14 @@ class TestInitPieces(unittest.TestCase):
     
     def setUp(self):
         self.position = Position()
-        self.team = Team()
-        self.piece = FakeInitPiece(self.position, self.team)
+        self.team = Team(1)
+        self.boardsize = BoardSize(8, 8)
+        self.piece = FakeInitPiece(self.position, self.team, self.boardsize)
     
     def test_initialisation(self):
         """Test the constructor."""
         self.assertEqual(self.position, self.piece._pos)
-        self.assertEqual(self.team, self.piece._team)
+        self.assertEqual(self.team, self.piece.team)
 
     def test_get_possible_moves(self):
         """Test the possible moves."""

@@ -16,11 +16,11 @@ class TestPieces(unittest.TestCase):
         """Test the possible moves."""
         init_pos = Position(0, 0, self.boardsize)
         pawn = Pawn(init_pos, Black(),  self.boardsize)
-        self.assertEqual(pawn.possible_moves(), Moves())
+        self.assertEqual(len(pawn.possible_moves()), len(Moves([])))
 
         init_pos = Position(4, 4, self.boardsize)
         pawn = Pawn(init_pos, Black(),  self.boardsize)
-        self.assertEqual(len(pawn.possible_moves()), 3)
+        self.assertEqual(len(pawn.possible_moves()), 6)
 
     def test_get_possible_moves_king(self):
         """Test the possible moves."""
@@ -33,8 +33,8 @@ class TestPieces(unittest.TestCase):
         self.assertEqual(len(king.possible_moves()), len(pos_moves))
 
         init_pos = Position(4, 4, self.boardsize)
-        pawn = King(init_pos, Black(),  self.boardsize)
-        self.assertEqual(len(pawn.possible_moves()), 8)
+        king = King(init_pos, Black(),  self.boardsize)
+        self.assertEqual(len(king.possible_moves()), 9)
 
 
 if __name__ == "__main__":

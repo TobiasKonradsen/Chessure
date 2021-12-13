@@ -33,7 +33,7 @@ class TestChessBoard(unittest.TestCase):
     def test_indexing(self):
         """Test whether we can index the board correctly."""
         r, c, = 2, 3
-        self.assertEqual(self.chessboard(r, c), r*self.cols + c)
+        self.assertEqual(self.chessboard[r, c], r*self.cols + c)
 
 
 if __name__ == "__main__":
