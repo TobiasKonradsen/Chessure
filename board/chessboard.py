@@ -8,7 +8,7 @@ class BoardSize(int):
         """Return a Moves instance."""
         cls.rows = rows
         cls.cols = cols
-        return super(cls, cls).__new__(cls, rows*cols, *args, **kwargs)
+        return super(cls, cls).__new__(cls, (rows+1)*(cols+1), *args, **kwargs)
 
 
 class ChessBoard(list):

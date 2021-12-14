@@ -12,22 +12,23 @@ class Pawn(InitPiece):
         
     def possible_moves(self):
         
-        moves = Moves([])
-        
-        p1 = self._pos + Position(self.team*1, 0, self.boardsize)
-        p2 = self._pos + Position(self.team*1, 1, self.boardsize)
-        p3 = self._pos + Position(self.team*1, -1, self.boardsize)
 
-        try_moves = [p1, p2, p3]
+        try_moves = Moves([])        
+
+        try_moves.append(self._pos + Position(self.team*1, 0, self.boardsize))
+        
+        try_moves.append(self._pos + Position(self.team*1, 1, self.boardsize))
+        
+        try_moves.append(self._pos + Position(self.team*1, -1, self.boardsize))
+
         
         if self.first_move:
             try_moves.append(self._pos + Position(self.team*2, 0, self.boardsize))
             self.first_move = False
         
         
-        for move in try_moves:
-            if move.isLegal():
-                moves.append(move)
+        moves = self.isLegal(try_moves)
+
 
         return moves
 
@@ -43,12 +44,71 @@ class Knight(InitPiece):
             try_moves.append(self._pos + Position(-sign*1, sign*2, self.boardsize))
             try_moves.append(self._pos + Position(-sign*2, sign*1, self.boardsize))
 
-        moves = Moves([])                         
-        for move in try_moves:
-            if move.isLegal():
-                moves.append(move)
+        moves = self.isLegal(try_moves)
+
                 
         return moves
+
+
+class Rook(InitPiece):
+    def __init__(self, init_pos, team, boardsize):
+        super().__init__(init_pos, team, boardsize)
+        
+    def possible_moves(self):
+        try_moves = Moves([])
+        for i in range(1, self.boardsize):
+            try_moves.append(self._pos + Position(i, 0, self.boardsize))
+            try_moves.append(self._pos + Position(-i, 0, self.boardsize))
+            try_moves.append(self._pos + Position(0, -i, self.boardsize))
+            try_moves.append(self._pos + Position(0, i, self.boardsize))
+        
+        
+        moves = self.isLegal(try_moves)
+
+        return moves
+
+
+class Bishop(InitPiece):
+    def __init__(self, init_pos, team, boardsize):
+        super().__init__(init_pos, team, boardsize)
+        
+    def possible_moves(self):
+        try_moves = Moves([])
+        for i in range(1, self.boardsize):
+            try_moves.append(self._pos + Position(i, i, self.boardsize))
+            try_moves.append(self._pos + Position(-i, -i, self.boardsize))
+            try_moves.append(self._pos + Position(i, -i, self.boardsize))
+            try_moves.append(self._pos + Position(-i, i, self.boardsize))
+        
+        
+        moves = self.isLegal(try_moves)
+
+        return moves
+
+
+class Queen(InitPiece):
+    def __init__(self, init_pos, team, boardsize):
+        super().__init__(init_pos, team, boardsize)
+        
+    def possible_moves(self):
+        try_moves = Moves([])
+        for i in range(1, self.boardsize):
+            #Bishop moves
+            try_moves.append(self._pos + Position(i, i, self.boardsize))
+            try_moves.append(self._pos + Position(-i, -i, self.boardsize))
+            try_moves.append(self._pos + Position(i, -i, self.boardsize))
+            try_moves.append(self._pos + Position(-i, i, self.boardsize))
+            ## Rook moves
+            try_moves.append(self._pos + Position(i, 0, self.boardsize))
+            try_moves.append(self._pos + Position(-i, 0, self.boardsize))
+            try_moves.append(self._pos + Position(0, -i, self.boardsize))
+            try_moves.append(self._pos + Position(0, i, self.boardsize))
+        
+        
+        moves = self.isLegal(try_moves)
+
+        return moves
+
 
 
 
@@ -58,20 +118,19 @@ class King(InitPiece):
         super().__init__(init_pos, team, boardsize)
 
     def possible_moves(self):
-        moves = Moves([])
-        p1 = self._pos + Position(-1, -1, self.boardsize)
-        p2 = self._pos + Position(-1, 0, self.boardsize)
-        p3 = self._pos + Position(-1, 1, self.boardsize)
-        p4 = self._pos + Position(0, 1, self.boardsize)
-        p5 = self._pos + Position(0, -1, self.boardsize)
-        p6 = self._pos + Position(1, 1, self.boardsize)
-        p7 = self._pos + Position(1, 0, self.boardsize)
-        p8 = self._pos + Position(1, -1, self.boardsize)
+        try_moves = Moves([])
+        try_moves.append( self._pos + Position(-1, -1, self.boardsize) ) 
+        try_moves.append( self._pos + Position(-1, 0, self.boardsize) )
+        try_moves.append( self._pos + Position(-1, 1, self.boardsize) )
+        try_moves.append( self._pos + Position(0, 1, self.boardsize) )
+        try_moves.append( self._pos + Position(0, -1, self.boardsize) )
+        try_moves.append( self._pos + Position(1, 1, self.boardsize) )
+        try_moves.append( self._pos + Position(1, 0, self.boardsize) )
+        try_moves.append( self._pos + Position(1, -1, self.boardsize) )
 
-        try_moves = [p1, p2, p3, p4, p5, p6, p7, p8]
-        for move in try_moves:
-            if move.isLegal():
-                moves.append(move)
+
+        moves = self.isLegal(try_moves)
+
 
         return moves
 
