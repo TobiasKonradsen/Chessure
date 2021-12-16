@@ -1,5 +1,6 @@
 import unittest
 from board.chessboard import BoardSize, ChessBoard
+from game_logic.position import Position
 
 
 class TestBoardSize(unittest.TestCase):
@@ -33,17 +34,18 @@ class TestChessBoard(unittest.TestCase):
     def test_indexing(self):
         """Test whether we can index the board correctly."""
         r, c, = 2, 3
-        self.assertEqual(self.chessboard[r, c], r*self.cols + c)
+        pos = Position(r, c, self.chessboard.size)
+        self.assertEqual(self.chessboard[pos], r*self.cols + c)
     
     def test_setting_values(self):
         """ Test the setting implementation of the board """
         r, c = 2, 3
+        pos = Position(r, c, self.chessboard.size)
+        self.chessboard[pos] = None
+        self.assertEqual(self.chessboard[pos], None)
         
-        self.chessboard[r,c] = None
-        self.assertEqual(self.chessboard[r, c], None)
-        
-        self.chessboard[r,c] = [None]*10
-        self.assertEqual(self.chessboard[r, c], [None]*10)
+        self.chessboard[pos] = [None]*10
+        self.assertEqual(self.chessboard[pos], [None]*10)
          
 
 

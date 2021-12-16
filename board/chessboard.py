@@ -1,5 +1,3 @@
-from typing import List
-
 
 class BoardSize(int):
     """A representation of the board size."""
@@ -27,12 +25,12 @@ class ChessBoard(list):
         """Use builtin-methods."""
         return self.size
 
-    def __getitem__(self, t_pos):
-        """Get the value in the list that corresponds to this row, col indexing."""
-        row, col = t_pos
+    def __getitem__(self, pos):
+        """Get a Position class in the list that corresponds to this row, col indexing."""
+        row, col = pos.row, pos.col
         return super().__getitem__(row*self.size.cols + col)
     
-    def __setitem__(self, t_pos, value):
+    def __setitem__(self, pos, value):
         """Get the value in the list that corresponds to this row, col indexing."""
-        row, col = t_pos
+        row, col = pos.row, pos.col
         return super().__setitem__(row*self.size.cols + col, value)

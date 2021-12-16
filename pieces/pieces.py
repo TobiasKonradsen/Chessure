@@ -9,23 +9,18 @@ class Pawn(InitPiece):
         super().__init__(init_pos, team, boardsize)
         
         self.first_move = True
+        self.name = 'Pawn'
         
     def possible_moves(self):
         
-
         try_moves = Moves([])        
-
         try_moves.append(self._pos + Position(self.team*1, 0, self.boardsize))
-        
         try_moves.append(self._pos + Position(self.team*1, 1, self.boardsize))
-        
         try_moves.append(self._pos + Position(self.team*1, -1, self.boardsize))
 
-        
         if self.first_move:
             try_moves.append(self._pos + Position(self.team*2, 0, self.boardsize))
             self.first_move = False
-        
         
         moves = self.isLegal(try_moves)
 
@@ -35,7 +30,8 @@ class Pawn(InitPiece):
 class Knight(InitPiece):
     def __init__(self, init_pos, team, boardsize):
         super().__init__(init_pos, team, boardsize)
-
+        self.name = 'Knight'
+        
     def possible_moves(self):
         try_moves = Moves([])
         for sign in [-1, 1]:
@@ -53,6 +49,7 @@ class Knight(InitPiece):
 class Rook(InitPiece):
     def __init__(self, init_pos, team, boardsize):
         super().__init__(init_pos, team, boardsize)
+        self.name = 'Rook'
         
     def possible_moves(self):
         try_moves = Moves([])
@@ -71,6 +68,7 @@ class Rook(InitPiece):
 class Bishop(InitPiece):
     def __init__(self, init_pos, team, boardsize):
         super().__init__(init_pos, team, boardsize)
+        self.name = 'Bishop'
         
     def possible_moves(self):
         try_moves = Moves([])
@@ -89,6 +87,7 @@ class Bishop(InitPiece):
 class Queen(InitPiece):
     def __init__(self, init_pos, team, boardsize):
         super().__init__(init_pos, team, boardsize)
+        self.name = 'Queen'
         
     def possible_moves(self):
         try_moves = Moves([])
@@ -116,6 +115,7 @@ class Queen(InitPiece):
 class King(InitPiece):
     def __init__(self, init_pos, team, boardsize):
         super().__init__(init_pos, team, boardsize)
+        self.name = 'King'
 
     def possible_moves(self):
         try_moves = Moves([])

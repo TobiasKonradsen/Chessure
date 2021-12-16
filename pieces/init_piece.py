@@ -9,6 +9,7 @@ class InitPiece(ABC):
         self._pos = init_pos
         self.team = team
         self.boardsize  = boardsize
+        self.name = 'Init piece'
     
     @abstractmethod
     def possible_moves(self):
@@ -21,17 +22,14 @@ class InitPiece(ABC):
                 moves.append(move)
         return moves
     
+    def __repr__(self):
+        return f"{self.team} {self.name} at {self._pos}"
+    
+    
     def move(self, pos):
         if pos in self.possible_moves():
              self.set_position(pos)
         else:
             raise IllegalMoveError()
-            
- 
-    def get_position(self):
-         return self._pos
-      
-    def set_position(self, pos):
-        self._pos = pos
-
+    
 

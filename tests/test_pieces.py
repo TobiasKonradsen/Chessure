@@ -9,7 +9,7 @@ from board.chessboard import BoardSize
 
 class TestPieces(unittest.TestCase):
     def setUp(self):
-        self.boardsize = BoardSize(7, 7) ## 7, 7 as the chessboard is zero indexed
+        self.boardsize = BoardSize(8, 8) ## 7, 7 as the chessboard is zero indexed
 
     def test_pawn(self):
         """ Test for the pawn piece """
