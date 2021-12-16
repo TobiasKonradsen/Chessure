@@ -19,7 +19,7 @@ class TestPieces(unittest.TestCase):
 
         init_pos = Position(4, 4, self.boardsize)
         pawn = Pawn(init_pos, Black(),  self.boardsize)
-        #print(pawn.possible_moves())
+        
         self.assertEqual(len(pawn.possible_moves()), 4)
         
         init_pos = Position(4, 4, self.boardsize)

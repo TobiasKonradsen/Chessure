@@ -29,11 +29,22 @@ class TestChessBoard(unittest.TestCase):
         """Test the constructor."""
         self.assertIsInstance(self.chessboard, list)
         self.assertEqual(len(self.chessboard), self.rows*self.cols)
-
+        
     def test_indexing(self):
         """Test whether we can index the board correctly."""
         r, c, = 2, 3
         self.assertEqual(self.chessboard[r, c], r*self.cols + c)
+    
+    def test_setting_values(self):
+        """ Test the setting implementation of the board """
+        r, c = 2, 3
+        
+        self.chessboard[r,c] = None
+        self.assertEqual(self.chessboard[r, c], None)
+        
+        self.chessboard[r,c] = [None]*10
+        self.assertEqual(self.chessboard[r, c], [None]*10)
+         
 
 
 if __name__ == "__main__":
