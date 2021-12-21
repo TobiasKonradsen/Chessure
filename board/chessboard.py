@@ -1,4 +1,6 @@
 
+
+
 class BoardSize(int):
     """A representation of the board size."""
 
@@ -7,6 +9,7 @@ class BoardSize(int):
         cls.rows = rows
         cls.cols = cols
         return super(cls, cls).__new__(cls, (rows)*(cols), *args, **kwargs)
+
 
 
 class ChessBoard(list):
@@ -34,3 +37,23 @@ class ChessBoard(list):
         """Get the value in the list that corresponds to this row, col indexing."""
         row, col = pos.row, pos.col
         return super().__setitem__(row*self.size.cols + col, value)
+    
+    def show_acii(self):
+        """ Simple representation of board, for debugging"""
+        stringlist = ""
+        stringrow = ""
+        for i, piece in enumerate(self):
+            if i%self.size.rows == 0:
+                stringlist += stringrow+"\n"
+                stringrow = ""
+            if not ((piece == None) or (type(piece) == int)):
+                stringrow += piece.acii
+                
+            else:
+                stringrow += "."
+        stringlist += stringrow
+        return str(stringlist[1:])
+            
+        
+        
+    

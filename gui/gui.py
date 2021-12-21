@@ -1,47 +1,13 @@
 
 
 
-# from tkinter import *
-
-# class GUI:
-#     def __init__(self, game, window_size =(400, 400)):
-        
-#         window = Tk()
-#         wx, wy = window_size
-#         window.geometry(f"{wx}x{wy}")
-#         label = Label(window,bg="red",width=10, height=5)
-#         label.place(x=0,y=0)
-
-#         label2 = Label(window,bg="blue",width=10, height=5)
-#         label2.place(x=100,y=100)
-
-#         label.bind("<Button-1>",self.drag_start)
-#         label.bind("<B1-Motion>",self.drag_motion)
-
-#         label2.bind("<Button-1>",self.drag_start)
-#         label2.bind("<B1-Motion>",self.drag_motion)
-
-#         window.mainloop()
-
-        
-
-#     def drag_start(self, event):
-#         widget = event.widget
-#         widget.startX = event.x
-#         widget.startY = event.y
-    
-#     def drag_motion(self, event):
-#         widget = event.widget
-#         x = widget.winfo_x() - widget.startX + event.x
-#         y = widget.winfo_y() - widget.startY + event.y
-#         widget.place(x=x,y=y)
-
-
-
-# GUI(1)
-
-
 import tkinter as tk
+
+from game_logic.game import Game
+from pieces.pieces import Pawn, King, Knight, Rook, Bishop, Queen
+from game_logic.team import White, Black
+from game_logic.position import Position
+
 
 class Gui(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -49,22 +15,96 @@ class Gui(tk.Tk):
         width = 700
         height = 700
         self.create_background(width, height, 8, 8)
+        self.game = Game(1)
+        self.board = self.game.board
         
-        label = tk.Label(self, bg="red",width=10, height=5)
-        label.place(x=0,y=0)
-        print(int(self.cellwidth-2))
-        label2 = tk.Label(self, bg="blue",width=10, height=5)
-        x1, x2, y1, y2 = self.pos[6, 3]
-        print(x1, x2, y1, y2)
-        label2.place(x=int(x1+7),y=int(y1+7))
-
-        label.bind("<Button-1>",self.drag_start)
-        label.bind("<B1-Motion>",self.drag_motion)
-
-        label2.bind("<Button-1>",self.drag_start)
-        label2.bind("<B1-Motion>",self.drag_motion)
+        self.width_image = 60
         
-    def drag_start(self, event):
+        self.labels = {}
+        
+        self.images = {}
+        
+        self.setup_images()
+        
+        self.show_board()
+
+
+
+    def setup_images(self):
+        """ Setup the image paths, this could be written more compressed"""
+        for piece in self.board:
+            if not piece == None:
+                if isinstance(piece.team, White):
+                    if isinstance(piece, Pawn):
+                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_plt60.png')
+                    if isinstance(piece, Rook):
+                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_rlt60.png')
+                    if isinstance(piece, Knight):
+                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_nlt60.png')
+                    if isinstance(piece, Queen):
+                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_qlt60.png')
+                    if isinstance(piece, King):
+                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_klt60.png')
+                    if isinstance(piece, Bishop):
+                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_blt60.png')
+                if isinstance(piece.team, Black):
+                    if isinstance(piece, Pawn):
+                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_pdt60.png')
+                    if isinstance(piece, Rook):
+                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_rdt60.png')
+                    if isinstance(piece, Knight):
+                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_ndt60.png')
+                    if isinstance(piece, Queen):
+                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_qdt60.png')
+                    if isinstance(piece, King):
+                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_kdt60.png')
+                    if isinstance(piece, Bishop):
+                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_bdt60.png')
+                        
+            
+    def show_board(self):
+        for piece in self.board:
+            self.setup_piece(piece)
+    
+    def delete_board(self):
+        for piece in self.board:
+            if piece != None:
+                self.labels[piece].destroy()
+        
+
+
+                
+            
+    def setup_piece(self, piece):
+        
+        if not piece == None:
+            position = piece.get_position()
+            row, col = position.row, position.col
+            x1, x2, y1, y2 = self.pos[row, col]
+            self.labels[piece] = tk.Label(self, image = self.images[piece], anchor = tk.SW)
+            self.labels[piece].place(x=(x1+x2)/2-self.width_image/2,y=(y1+y2)/2-self.width_image/2)
+            self.labels[piece].bind("<Button-1>",lambda event, arg=piece: self.drag_start(event, piece))
+            self.labels[piece].bind("<B1-Motion>",self.drag_motion)
+            self.labels[piece].bind("<ButtonRelease-1>", lambda event, arg=piece: self.snap_to_center(event, piece))
+    
+    def snap_to_center(self, event, piece):
+        widget = event.widget
+
+        x = widget.winfo_x() - widget.startX + event.x
+        y = widget.winfo_y() - widget.startY + event.y
+        col, row = int(x // self.cellwidth), int(y // self.cellheight) ## This is weird...
+
+        trypos = Position(row, col, self.board.size)
+        self.delete_board()
+        
+        self.game.event_handler(piece, trypos) # Move the piece
+
+        self.show_board()
+        
+
+        
+        
+    def drag_start(self, event, piece):
         widget = event.widget
         widget.startX = event.x
         widget.startY = event.y
@@ -74,8 +114,10 @@ class Gui(tk.Tk):
         x = widget.winfo_x() - widget.startX + event.x
         y = widget.winfo_y() - widget.startY + event.y
         widget.place(x=x,y=y)
+        
          
     def create_background(self, width, height, boardsizex, boardsizey):
+        
         self.canvas = tk.Canvas(self, width = width, height = height, borderwidth = 0, highlightthickness = 0)
         
         self.canvas.pack(side="top", fill="both", expand="true")

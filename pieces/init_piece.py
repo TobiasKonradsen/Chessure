@@ -5,11 +5,13 @@ from game_logic.moves import Moves
 
 
 class InitPiece(ABC):
-    def __init__(self, init_pos, team, boardsize):
+    def __init__(self, init_pos, team, board):
         self._pos = init_pos
         self.team = team
-        self.boardsize  = boardsize
+        self.boardsize  = board.size
         self.name = 'Init piece'
+        self.acii = 'I'
+        self.board = board
     
     @abstractmethod
     def possible_moves(self):
@@ -22,14 +24,22 @@ class InitPiece(ABC):
                 moves.append(move)
         return moves
     
+    
+    def check_not_empty(self, final_position):
+        piece_at_pos = self.board[final_position]
+        return not ((piece_at_pos == None) or (type(piece_at_pos) == int))
+        
+    
     def __repr__(self):
         return f"{self.team} {self.name} at {self._pos}"
     
-    
+    def get_position(self):
+        return self._pos
+
+        
     def move(self, pos):
-        if pos in self.possible_moves():
-             self.set_position(pos)
-        else:
-            raise IllegalMoveError()
+        ## Checks is done at the game-level
+        self._pos = pos
+
     
 
