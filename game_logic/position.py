@@ -17,7 +17,7 @@ class Position:
         return f"Position(row={self.row}, col={self.col}, boardsize={self.boardsize})"
     
     def __hash__(self):
-        """This is done wot find uniqueness"""
+        """This is done for set uniqueness"""
         return hash((self.row, self.col))
     
     def __eq__(self, other):

@@ -71,6 +71,7 @@ class Game:
         all_moves_white = set()
         all_moves_black = set()
         for piece in self.board:
+            #print(piece)
             if piece.team == White():
                 all_moves_white.update(piece.possible_moves_board())
                 if isinstance(piece, King):
@@ -95,7 +96,7 @@ class Game:
         
         self.move_piece(piece, try_move)
         
-        #self.check_check()
+        self.check_check()
     def event_handler(self, try_move, piece):
         """ Get a piece, and the proposed move -  Check move, and moves if possible. """
         if self.board_move_check(try_move, piece):

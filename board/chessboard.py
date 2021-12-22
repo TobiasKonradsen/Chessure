@@ -40,6 +40,8 @@ class ChessBoard(list):
         index = row*self.size.cols + col
         if value == None and index in self.piece_positions:
             self.piece_positions.remove(index)
+        elif value == None:
+            pass
         else:
             self.piece_positions.add(index)
         return super().__setitem__(index, value)

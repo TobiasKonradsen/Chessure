@@ -34,33 +34,32 @@ class Gui(tk.Tk):
     def setup_images(self):
         """ Setup the image paths, this could be written more compressed"""
         for piece in self.board:
-            if not piece == None:
-                if isinstance(piece.team, White):
-                    if isinstance(piece, Pawn):
-                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_plt60.png')
-                    if isinstance(piece, Rook):
-                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_rlt60.png')
-                    if isinstance(piece, Knight):
-                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_nlt60.png')
-                    if isinstance(piece, Queen):
-                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_qlt60.png')
-                    if isinstance(piece, King):
-                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_klt60.png')
-                    if isinstance(piece, Bishop):
-                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_blt60.png')
-                if isinstance(piece.team, Black):
-                    if isinstance(piece, Pawn):
-                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_pdt60.png')
-                    if isinstance(piece, Rook):
-                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_rdt60.png')
-                    if isinstance(piece, Knight):
-                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_ndt60.png')
-                    if isinstance(piece, Queen):
-                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_qdt60.png')
-                    if isinstance(piece, King):
-                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_kdt60.png')
-                    if isinstance(piece, Bishop):
-                        self.images[piece] = tk.PhotoImage(file='./graphics/Chess_bdt60.png')
+            if isinstance(piece.team, White):
+                if isinstance(piece, Pawn):
+                    self.images[piece] = tk.PhotoImage(file='./graphics/Chess_plt60.png')
+                if isinstance(piece, Rook):
+                    self.images[piece] = tk.PhotoImage(file='./graphics/Chess_rlt60.png')
+                if isinstance(piece, Knight):
+                    self.images[piece] = tk.PhotoImage(file='./graphics/Chess_nlt60.png')
+                if isinstance(piece, Queen):
+                    self.images[piece] = tk.PhotoImage(file='./graphics/Chess_qlt60.png')
+                if isinstance(piece, King):
+                    self.images[piece] = tk.PhotoImage(file='./graphics/Chess_klt60.png')
+                if isinstance(piece, Bishop):
+                    self.images[piece] = tk.PhotoImage(file='./graphics/Chess_blt60.png')
+            if isinstance(piece.team, Black):
+                if isinstance(piece, Pawn):
+                    self.images[piece] = tk.PhotoImage(file='./graphics/Chess_pdt60.png')
+                if isinstance(piece, Rook):
+                    self.images[piece] = tk.PhotoImage(file='./graphics/Chess_rdt60.png')
+                if isinstance(piece, Knight):
+                    self.images[piece] = tk.PhotoImage(file='./graphics/Chess_ndt60.png')
+                if isinstance(piece, Queen):
+                    self.images[piece] = tk.PhotoImage(file='./graphics/Chess_qdt60.png')
+                if isinstance(piece, King):
+                    self.images[piece] = tk.PhotoImage(file='./graphics/Chess_kdt60.png')
+                if isinstance(piece, Bishop):
+                    self.images[piece] = tk.PhotoImage(file='./graphics/Chess_bdt60.png')
                         
             
     def show_board(self):
