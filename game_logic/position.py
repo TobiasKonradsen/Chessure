@@ -9,10 +9,16 @@ class Position:
 
     def __add__(self, pos):
         return Position(self.row + pos.row, self.col + pos.col, self.boardsize)
+    
+    def __sub__(self, pos):
+        return Position(self.row - pos.row, self.col - pos.col, self.boardsize)
 
     def __repr__(self):
         return f"Position(row={self.row}, col={self.col}, boardsize={self.boardsize})"
     
+    def __hash__(self):
+        """This is done wot find uniqueness"""
+        return hash((self.row, self.col))
     
     def __eq__(self, other):
         """ Method for checking how to compare the object, for the 'in' operation """

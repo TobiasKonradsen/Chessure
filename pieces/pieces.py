@@ -116,7 +116,7 @@ class Rook(InitPiece):
         
         collided = self.get_collided_init()
         try_moves = Moves([])
-        for i in range(1, max(self.boardsize.rows,self.boardsize.cols)):
+        for i in range(1, max(self.boardsize.rows, self.boardsize.cols)):
             positions = self.get_positions(i)
             
             for k, position in enumerate(positions):
@@ -181,23 +181,41 @@ class King(InitPiece):
         self.name = 'King'
         self.acii = 'K'
         self.first_move = True # For Castling 
-    def castling_check(self):
-        """ Check if castling - This should probably not be here"""
-        return True
+
+    def castling_check(self, move):
+        """ Check if castling"""
+        directionsposition = move - self._pos
+        if self.first_move and abs(directionsposition.col) == 2:
+            direction = directionsposition.col // 2
+            collided = False
+            for i in range(1, self.boardsize.cols):
+                testmove = self._pos + Position(0, direction*i, self.boardsize)
+                if testmove.isLegal() and self.check_not_empty(testmove) and not collided:
+                    collided = True 
+                    other_piece  = self.board[testmove]
+                    if type(other_piece) == Rook: ## Strict check on the class, as bishop and queen inheirits from rook
+                        if other_piece.first_move:
+                            return [True, other_piece, Position(0, -direction, self.boardsize)]
+                        
+        return [False, None, None]
     def possible_moves(self):
         try_moves = Moves([])
-        try_moves.append( self._pos + Position(-1, -1, self.boardsize) ) 
-        try_moves.append( self._pos + Position(-1, 0, self.boardsize) )
-        try_moves.append( self._pos + Position(-1, 1, self.boardsize) )
-        try_moves.append( self._pos + Position(0, 1, self.boardsize) )
-        try_moves.append( self._pos + Position(0, -1, self.boardsize) )
-        try_moves.append( self._pos + Position(1, 1, self.boardsize) )
-        try_moves.append( self._pos + Position(1, 0, self.boardsize) )
-        try_moves.append( self._pos + Position(1, -1, self.boardsize) )
-        if self.first_move and self.castling_check:
-            castling_moves = [self._pos + Position(0, 2, self.boardsize),
-                              self._pos + Position(0, -2, self.boardsize)]
-            for move in castling_moves:
+        positions = [Position(-1, -1, self.boardsize),
+                     Position(-1, 0, self.boardsize),
+                     Position(-1, 1, self.boardsize),
+                     Position(0, 1, self.boardsize),
+                     Position(0, -1, self.boardsize),
+                     Position(1, 1, self.boardsize),
+                     Position(1, 0, self.boardsize),
+                     Position(1, -1, self.boardsize)]
+        for position in positions:
+            try_moves.append(self._pos + position)
+
+        
+        castling_moves = [self._pos + Position(0, 2, self.boardsize),
+                          self._pos + Position(0, -2, self.boardsize)]
+        for move in castling_moves:
+            if self.castling_check(move)[0]:
                 try_moves.append( move )
 
 

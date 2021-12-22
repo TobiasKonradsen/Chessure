@@ -16,7 +16,8 @@ class TestBoardSize(unittest.TestCase):
         self.assertEqual(self.boardsize.rows, self.rows)
         self.assertEqual(self.boardsize.cols, self.cols)
         self.assertEqual(self.boardsize, self.rows*self.cols)
-
+class MockClass:
+    pass
 
 class TestChessBoard(unittest.TestCase):
     """Test the functionality of the chessboard."""
@@ -46,7 +47,18 @@ class TestChessBoard(unittest.TestCase):
         
         self.chessboard[pos] = [None]*10
         self.assertEqual(self.chessboard[pos], [None]*10)
-         
+    
+    def test_iterator(self):
+        r, c = 2, 3
+        pos = Position(r, c, self.chessboard.size)
+        self.chessboard[pos] = MockClass()
+        stufflist = []
+        for stuff in self.chessboard:
+            stufflist.append(stuff)
+        self.assertEqual(len(stufflist), 1)
+        self.assertTrue(isinstance(stuff, MockClass))
+    def test_internal_bookkeeping(self):
+        print(self.board)
 
 
 if __name__ == "__main__":

@@ -16,7 +16,21 @@ class InitPiece(ABC):
     @abstractmethod
     def possible_moves(self):
         raise NotImplementedError('This piece should not be able to move')
-    
+        
+        
+    def possible_moves_board(self):
+        """" Takes into account the board state when finding possible moves. """
+        possible_moves_internal = self.possible_moves()
+        possible_moves = Moves([])
+        for move in possible_moves_internal:
+            temp_piece = self.board[move]
+            if not temp_piece == None:
+
+                if temp_piece.team != self.team:
+                    possible_moves.append(move)
+            else:
+                possible_moves.append(move)
+        return possible_moves
     def isLegal(self, try_moves):
         moves = Moves([])                         
         for move in try_moves:
@@ -26,6 +40,7 @@ class InitPiece(ABC):
     
     
     def check_not_empty(self, final_position):
+        """ Checks if not empty """
         piece_at_pos = self.board[final_position]
         return not ((piece_at_pos == None) or (type(piece_at_pos) == int))
         

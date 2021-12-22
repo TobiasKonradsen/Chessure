@@ -7,6 +7,7 @@ from game_logic.game import Game
 from pieces.pieces import Pawn, King, Knight, Rook, Bishop, Queen
 from game_logic.team import White, Black
 from game_logic.position import Position
+from game_logic.moves import Moves
 
 
 class Gui(tk.Tk):
@@ -85,30 +86,50 @@ class Gui(tk.Tk):
             self.labels[piece].place(x=(x1+x2)/2-self.width_image/2,y=(y1+y2)/2-self.width_image/2)
             self.labels[piece].bind("<Button-1>",lambda event, arg=piece: self.drag_start(event, piece))
             self.labels[piece].bind("<B1-Motion>",self.drag_motion)
-            self.labels[piece].bind("<ButtonRelease-1>", lambda event, arg=piece: self.snap_to_center(event, piece))
+            self.labels[piece].bind("<ButtonRelease-1>", lambda event, arg=piece: self.on_release(event, piece))
     
-    def snap_to_center(self, event, piece):
+    def on_release(self, event, piece):
         widget = event.widget
 
         x = widget.winfo_x() - widget.startX + event.x
         y = widget.winfo_y() - widget.startY + event.y
         col, row = int(x // self.cellwidth), int(y // self.cellheight) ## This is weird...
 
-        trypos = Position(row, col, self.board.size)
+        try_move = Position(row, col, self.board.size)
+        # Delete the board.
         self.delete_board()
-        
-        self.game.event_handler(piece, trypos) # Move the piece
-
+        # Game handles the move. Either it move, or not. 
+        self.game.event_handler(try_move, piece) # Move the piece
+        # Show updated move. 
         self.show_board()
+        self.remove_underlay()
         
 
         
-        
+    def remove_underlay(self):
+        for cans in self.underlay:
+            self.canvas.delete(cans)
+            
+    def underlay_for_possible_moves(self, piece):
+        possible_moves = piece.possible_moves_board()
+        # Green border for possible moves
+        for position in possible_moves:
+            row, col = position.row, position.col
+            x1, x2, y1, y2 = self.pos[row, col]
+            self.underlay.append(
+                self.canvas.create_rectangle(x1, y1, x2, y2, 
+                                             fill='green', tags="rect") # stipple="gray50"
+                                )
+                
+                
     def drag_start(self, event, piece):
+        self.underlay = []
         widget = event.widget
         widget.startX = event.x
         widget.startY = event.y
+        self.underlay_for_possible_moves(piece)
         
+                
     def drag_motion(self, event):
         widget = event.widget
         x = widget.winfo_x() - widget.startX + event.x
