@@ -36,6 +36,26 @@ class Game:
             pos = Position(6, col)
             self.board[pos] = Pawn(pos, Black(), self.board) 
     
+
+    def get_board(self):
+        """Return a bitboard of the board state. This could probably be optimized."""
+        bitboard = [] ## This is not a bit board... 
+        pieces = [Pawn, Rook, Knight, Bishop, Queen, King]
+        teams = [White, Black]
+        ## Lazy programming....
+        for team in teams:
+            for piece in pieces:
+                piece_pos_list = []
+                for piece_board in self.board:
+                    if type(piece) == piece_board and isinstance(piece.team,team):
+                        piece_pos_list.append(piece.toNumber())
+                bitboard.append(piece_pos_list)
+        return bitboard
+    
+
+            
+            
+
     def move_piece(self, piece, try_move):
         
         prevpos = piece.get_position()
@@ -81,9 +101,10 @@ class Game:
                 if isinstance(piece, King):
                     black_king = piece
         if black_king.get_position() in all_moves_white:
-            print("Black is check")
+            print("Black is check") # This works, but needs to do something here :P
         if white_king.get_position() in all_moves_black:
-            print("White is check")
+            print("White is check") # Needs to do something 
+            
     def board_move(self, try_move, piece):
     
         piece_on_position = self.board[try_move]

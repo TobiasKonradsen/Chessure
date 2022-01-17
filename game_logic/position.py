@@ -27,7 +27,9 @@ class Position:
         else:
             return self.row == other
     
-    
+    def toNumber(self):
+        """Easier indexing, for the save/load of the boardstate"""
+        return self.row*self.boardsize.cols + self.col
     
     def isLegal(self):
         row_bol = 0 <= self.row < self.boardsize.rows  

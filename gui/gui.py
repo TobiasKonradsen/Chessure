@@ -2,6 +2,7 @@
 
 
 import tkinter as tk
+from game_logic.game import Game
 
 from game_logic.game import Game
 from pieces.pieces import Pawn, King, Knight, Rook, Bishop, Queen

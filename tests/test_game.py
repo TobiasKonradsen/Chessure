@@ -48,7 +48,10 @@ class TestGame(unittest.TestCase):
         pos = Position(1,1, self.board.size)
         pawn_destroyed = self.board[pos]
         self.assertTrue(pawn_destroyed == None)
-        
+    
+    def test_getboardstate(self):
+        """Get the current boardstate"""
+        print(self.game.get_board())
         
         
     
