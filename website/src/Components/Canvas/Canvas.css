@@ -1,0 +1,8 @@
+.ChessCanvas {
+    display: grid;
+    background-color: #2196F3;
+    grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+    grid-template-rows: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+    
+    padding: 10px;
+  }

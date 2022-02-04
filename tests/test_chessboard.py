@@ -16,8 +16,9 @@ class TestBoardSize(unittest.TestCase):
         self.assertEqual(self.boardsize.rows, self.rows)
         self.assertEqual(self.boardsize.cols, self.cols)
         self.assertEqual(self.boardsize, self.rows*self.cols)
-
-
+class MockClass:
+    acii = 'M'
+    
 class TestChessBoard(unittest.TestCase):
     """Test the functionality of the chessboard."""
 
@@ -46,7 +47,47 @@ class TestChessBoard(unittest.TestCase):
         
         self.chessboard[pos] = [None]*10
         self.assertEqual(self.chessboard[pos], [None]*10)
-         
+    
+    def test_iterator(self):
+        r, c = 2, 3
+        pos = Position(r, c, self.chessboard.size)
+        self.chessboard[pos] = MockClass()
+        stufflist = []
+        for stuff in self.chessboard:
+            stufflist.append(stuff)
+        self.assertEqual(len(stufflist), 1)
+        self.assertTrue(isinstance(stuff, MockClass))
+
+    def test_internal_bookkeeping(self):
+        r, c = 2, 3
+        pos = Position(r, c, self.chessboard.size)
+        self.chessboard[pos] = MockClass()
+        
+        self.assertEqual(len(self.chessboard.piece_positions),1)
+        
+        self.chessboard[pos] = None
+        
+        self.assertEqual(len(self.chessboard.piece_positions),0)
+    def test_internal_bookkeeping_ver2(self):
+        r, c = 2, 3
+        pos = Position(r, c, self.chessboard.size)
+        self.chessboard[pos] = MockClass()
+        
+        r, c = 3, 3
+        pos1 = Position(r, c, self.chessboard.size)
+        self.chessboard[pos1] = MockClass()
+        
+        self.assertEqual(len(self.chessboard.piece_positions),2)
+        
+        self.chessboard[pos1] = None
+        self.chessboard[pos1] = None ## Test already setting None to None Value
+        
+        self.assertEqual(len(self.chessboard.piece_positions),1) 
+        
+        self.chessboard[pos] = None
+        self.assertEqual(len(self.chessboard.piece_positions),0)
+        
+        
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # import unittest
 # import time
-# from game_logic.moves import Moves, SlowMoves
+# from game_logic.moves import Moves as SlowMoves, SlowMoves as Moves
 
 # n = 100_000
 
