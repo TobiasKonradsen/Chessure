@@ -11,7 +11,7 @@ Todo:
  -- Win conditions
  -- Player Functionality
  - Evaluate functions
- -- Depth search algorith, check moves. 
+ -- Depth search algorithm, check moves. 
  -- Compare depth based possible moves with table values
  - AI
  -- Simple alpha beta tree
