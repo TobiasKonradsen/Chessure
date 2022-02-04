@@ -34,8 +34,11 @@ class CanvasBlock extends React.Component {
       e.preventDefault();
       var jsonData = e.dataTransfer.getData("pieceInfo");
       var data = JSON.parse(jsonData)
+      // console.log(data)
       if (data.possibleMoves.includes(this.props.chessIndex)){
-            e.target.appendChild(document.getElementById(data.id));
+            const prevPiece = document.getElementById(data.target_id)
+            console.log(prevPiece)
+            e.target.replaceChildren(prevPiece);
             // Need some serverbased response for the move here :)
       }
 

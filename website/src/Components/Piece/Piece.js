@@ -102,7 +102,8 @@ class Piece extends React.Component {
     }
 
     dragStart(e) {
-      var data = JSON.stringify({id: e.target.id, possibleMoves: this.props.possibleMoves})
+      console.log(this.props.id)
+      var data = JSON.stringify({target_id: e.target.id, own_id:this.props.chessIndex+100, possibleMoves: this.props.possibleMoves})
       e.dataTransfer.setData("pieceInfo", data);
     }
 

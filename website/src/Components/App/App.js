@@ -18,11 +18,11 @@ class App extends React.Component {
     this.state = {
       // Position from 1 to sidelength*2
       boardState: [
-        {type:'Queen', team:'White', position:0, possibleMoves:[1,2,3]},
-        {type:'Queen', team:'White', position:1, possibleMoves:[4,5,6]},
-        {type:'Queen', team:'White', position:2, possibleMoves:[7,8,9]},
-        {type:'King', team:'Black', position:3, possibleMoves:[10,11,12]},
-        {type:'Pawn', team:'Black', position:4, possibleMoves:[13,14,15]},
+        {type:'Queen', team:'White', position:0, possibleMoves:[1,2,3,4,5,6,7,8,9,10,11,12,13]},
+        {type:'Queen', team:'White', position:1, possibleMoves:[1,2,3,4,5,6,7,8,9,10,11,12,13]},
+        {type:'Queen', team:'White', position:2, possibleMoves:[1,2,3,4,5,6,7,8,9,10,11,12,13]},
+        {type:'King', team:'Black', position:3, possibleMoves:[1,2,3,4,5,6,7,8,9,10,11,12,13]},
+        {type:'Pawn', team:'Black', position:4, possibleMoves:[1,2,3,4,5,6,7,8,9,10,11,12,13]},
       ], 
                   }
     // this.addTrack = this.addTrack.bind(this)
